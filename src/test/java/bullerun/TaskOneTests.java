@@ -14,7 +14,6 @@ public class TaskOneTests {
     private TaskOne taskOne;
 
     private static final double PI = 3.141592653589793;
-    private final double DELTA = 0.0001;
 
     @BeforeEach
     public void setUp() {
@@ -26,10 +25,6 @@ public class TaskOneTests {
         assertThrows(IllegalArgumentException.class, () -> taskOne.factorial(-1));
     }
 
-    @Test
-    public void testFactorialZero() {
-        assertEquals(1, taskOne.factorial(0));
-    }
 
     @ParameterizedTest
     @MethodSource("factorialArguments")
@@ -46,6 +41,7 @@ public class TaskOneTests {
     @ParameterizedTest
     @MethodSource("cosArguments")
     public void testCosCorrectness(double input, double expected) {
+        double DELTA = 0.0001;
         assertEquals(expected, taskOne.cosTaylor(input, 15), DELTA);
     }
 
@@ -57,6 +53,7 @@ public class TaskOneTests {
 
     static Stream<Arguments> factorialArguments() {
         return Stream.of(
+                Arguments.of(0, 1L),
                 Arguments.of(1, 1L),
                 Arguments.of(2, 2L),
                 Arguments.of(3, 6L),
@@ -73,7 +70,8 @@ public class TaskOneTests {
                 Arguments.of(PI, -1.0),
                 Arguments.of((PI * 3) / 2, 0.0),
                 Arguments.of(-PI / 3, 0.5),
-                Arguments.of(0.5, 0.87758256189)
+                Arguments.of(0.5, 0.87758256189),
+                Arguments.of(PI / 3, 0.5)
         );
     }
 }

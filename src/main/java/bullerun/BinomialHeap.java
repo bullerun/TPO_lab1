@@ -3,7 +3,7 @@ package bullerun;
 import java.util.LinkedList;
 
 class BinomialHeap {
-    private static class Node {
+    public static class Node {
         int key, degree;
         Node parent, child, sibling;
 
@@ -54,7 +54,7 @@ class BinomialHeap {
     private void consolidate() {
         if (heap.isEmpty()) return;
         LinkedList<Node> newHeap = new LinkedList<>();
-        Node prev = null, curr = heap.removeFirst(), next;
+        Node curr = heap.removeFirst(), next;
         while (!heap.isEmpty()) {
             next = heap.removeFirst();
             if (curr.degree != next.degree || (!heap.isEmpty() && heap.peek().degree == curr.degree)) {
@@ -102,5 +102,9 @@ class BinomialHeap {
         heap = union(heap, childHeap);
         consolidate();
         return minNode.key;
+    }
+
+    public LinkedList<Node> getHeap() {
+        return heap;
     }
 }
